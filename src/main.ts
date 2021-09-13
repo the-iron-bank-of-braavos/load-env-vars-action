@@ -1,3 +1,5 @@
+import {inspect} from 'util'
+
 const core = require('@actions/core')
 const github = require('@actions/github')
 const io = require('@actions/io')
