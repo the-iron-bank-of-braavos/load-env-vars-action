@@ -7,6 +7,88 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
+const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => {
+
+    /*
+     * Check credentials.
+     * Must be defined App Credentials
+     */
+    if (
+		appId === '' ||
+        privateKey === '' ||
+        clientId === '' ||
+        clientSecret === ''
+    ) {
+      throw new Error(
+        'Authorization required!. You must provide Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.'
+      )
+    }
+
+    // Define empty token
+    let token = ''
+
+	  // Create octokit instance as app
+	  const appOctokit = new Octokit({
+		authStrategy: createAppAuth,
+		auth: {
+		  appId: appId,
+		  privateKey: privateKey
+		}
+	  })
+
+      // Retrieve app installations list
+      const response = await appOctokit.request('GET /app/installations')
+      const data = response.data
+
+      let installationId = Number(0)
+
+      // Find app installationId by organization
+      for (let i = 0; i < data.length; i++) {
+        core.debug(`Installation: ${inspect(data[i])}`)
+        if (data[i]?.account?.login === organization) {
+          installationId = data[i].id
+          break
+        }
+      }
+
+      core.debug(`Installation ID: ${inspect(installationId)}`)
+      if (installationId === 0) {
+        throw new Error(
+          'The ' +
+            organization +
+            ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.'
+        )
+      }
+
+      // Create app authentication
+      const auth = createAppAuth({
+        appId: appId,
+        privateKey: privateKey,
+        clientId: clientId,
+        clientSecret: clientSecret
+      })
+
+      // Authenticate as app installation and retrieve access token
+      const installationAuthentication = await auth({
+        type: 'installation',
+        installationId: installationId
+      })
+
+      // Set access token
+      token = installationAuthentication.token
+
+
+    // Throw error of invalid credentials if token is empty ( or not found ).
+    if (token === '') {
+      throw new Error(
+        'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
+      )
+    }
+	
+	return token;
+
+}
+
 /**
  * Sets env variable for the job
  */
