@@ -1,3 +1,5 @@
+import {Octokit} from '@octokit/rest'
+import {createAppAuth} from '@octokit/auth-app'
 import {inspect} from 'util'
 
 const core = require('@actions/core')
