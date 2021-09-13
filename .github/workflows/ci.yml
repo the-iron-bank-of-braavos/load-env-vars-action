@@ -44,4 +44,12 @@ jobs:
       - uses: ./
         with:
           repository: "${{ github.repository }}"
-          token: "${{ secrets.GITHUB_TOKEN }}"
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+      - name: "See exported values"
+        run: env        
+      - name: Test
+        run: |
+          echo ${{ env.DEMO }}
+          echo ${{ env.VERSION }}
+          echo ${{ steps.action-env.outputs.DEMO }}
+          echo ${{ steps.action-env.outputs.VERSION }}
