@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Create a workflow dispatch event",
-  "main": "lib/index.js",
+  "main": "lib/main.ts",
   "scripts": {
     "build": "tsc && ncc build",
     "format": "prettier --write '**/*.ts'",
