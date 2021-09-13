@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/santander-group/load-env-vars-action@main
+      - uses: santander-group/load-env-vars-action@v1
