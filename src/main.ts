@@ -41,7 +41,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
 	  })
 
       // Retrieve app installations list
-      const response = await appOctokit.request('GET /app/installations')
+      const response = appOctokit.request('GET /app/installations')
       const data = response.data
 
       let installationId = Number(0)
@@ -73,7 +73,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
       })
 
       // Authenticate as app installation and retrieve access token
-      const installationAuthentication = await auth({
+      const installationAuthentication = auth({
         type: 'installation',
         installationId: installationId
       })
