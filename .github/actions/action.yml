@@ -8,7 +8,7 @@ runs:
         id: action-env
         uses: Steph0/dotenv-configserver@main
         with:
-          repository: "the-iron-bank-of-braavos/load-env"
+          repository: "${{ secrets.GITHUB_REPOSITORY }}"
           token: "${{ secrets.GITHUB_TOKEN }}"
       
       # You should see your .env config in 'env'
