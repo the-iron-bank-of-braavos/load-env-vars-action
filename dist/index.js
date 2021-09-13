@@ -10510,9 +10510,13 @@ const exportToOutput = (envData = {}) => {
  * Determines target configuration filename based on action settings
  */
 const buildEnvFilename = (root, directory, filename, profile = '') => {
-    const hasExtension = (filename.lastIndexOf('.') !== -1);
-    const namePart = (hasExtension) ? filename.substring(0, filename.lastIndexOf('.')) : filename;
-    const extensionPart = (hasExtension) ? filename.substring(filename.lastIndexOf('.'), filename.length) : '';
+    const hasExtension = filename.lastIndexOf('.') !== -1;
+    const namePart = hasExtension
+        ? filename.substring(0, filename.lastIndexOf('.'))
+        : filename;
+    const extensionPart = hasExtension
+        ? filename.substring(filename.lastIndexOf('.'), filename.length)
+        : '';
     core.debug(`${filename} -> name:[${namePart}], extension: [${extensionPart}]`);
     // If no profile, just use current filename
     let profiledFilename = filename;
@@ -10539,7 +10543,7 @@ const buildEnvFilename = (root, directory, filename, profile = '') => {
 /**
  * Parse env file
  */
-const loadDotenvFile = (filepath) => {
+const loadDotenvFile = filepath => {
     core.info(`Loading [${filepath}] file`);
     return dotenv.parse(fs.readFileSync(filepath));
 };
@@ -10552,16 +10556,18 @@ const cloneDotenvConfig = (owner, repo, branch, token, destination) => __awaiter
     // Login with token
     const octokit = github.getOctokit(token);
     // Detect platform
-    const onWindows = (process.platform === 'win32');
-    const downloadRepo = (onWindows) ? octokit.rest.repos.downloadZipballArchive : octokit.rest.repos.downloadTarballArchive;
-    const archiveExt = (onWindows) ? '.zip' : '.tar.gz';
-    const extract = (onWindows) ? tc.extractZip : tc.extractTar;
+    const onWindows = process.platform === 'win32';
+    const downloadRepo = onWindows
+        ? octokit.rest.repos.downloadZipballArchive
+        : octokit.rest.repos.downloadTarballArchive;
+    const archiveExt = onWindows ? '.zip' : '.tar.gz';
+    const extract = onWindows ? tc.extractZip : tc.extractTar;
     const params = {
         owner: owner,
         repo: repo,
         ref: branch
     };
-    core.info("Downloading zip archive");
+    core.info('Downloading zip archive');
     core.debug(params);
     const response = yield downloadRepo(params);
     if (response.status != 200) {
@@ -10608,13 +10614,13 @@ const inputs = () => {
         // token: ${{ secrets.GITHUB_TOKEN }}
         token: core.getInput('token', { required: true }),
         // The remote branch to checkout (default: main)
-        branch: core.getInput('branch') || "main",
+        branch: core.getInput('branch') || 'main',
         // The working folder to write configuration to (default 'RUNNER_TEMP')
         destination: core.getInput('destination') || process.env['RUNNER_TEMP'] || '.',
         // Look for file in subdirectory (default '.')
         directory: core.getInput('directory') || '.',
         // The config filename (default to '.env')
-        filename: core.getInput('filename') || ".env",
+        filename: core.getInput('filename') || '.env',
         // profile for file (ex: 'prod' will make tool look for <filename_part>-<profile>.<filename_extension>)
         // extension represents the last dot of a filename (if any)
         // if empty, won't apply
