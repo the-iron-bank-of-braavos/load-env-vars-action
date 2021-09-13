@@ -42,6 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        id: action-env
         with:
           repository: "${{ github.repository }}"
           token: "${{ secrets.GITHUB_TOKEN }}"          
