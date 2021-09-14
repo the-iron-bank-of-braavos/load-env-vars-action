@@ -284,7 +284,7 @@ async function run() {
     let token = settings.token
 
     if (token === '') {
-      token = getAppToken(owner,appId,privateKey,clientId,clientSecret,)
+      token = getAppToken(settings.owner,settings.appId,settings.privateKey,settings.clientId,settings.clientSecret)
     }
 
     // Clone remote configserver
