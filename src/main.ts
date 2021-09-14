@@ -1,9 +1,8 @@
-const {Octokit} = require('@octokit/rest')
-const {createAppAuth} = require('@octokit/auth-app')
 import {inspect} from 'util'
 
 const core = require('@actions/core')
 const github = require('@actions/github')
+const createAppAuth = require('@octokit/auth-app')
 const io = require('@actions/io')
 const tc = require('@actions/tool-cache')
 const fs = require('fs')
@@ -37,7 +36,7 @@ const getAppToken = async (
   let token = ''
 
   // Create octokit instance as app
-  const appOctokit = new Octokit({
+  const appOctokit = github.getOctokit({
     authStrategy: createAppAuth,
     auth: {
       appId: appId,
@@ -242,6 +241,10 @@ const inputs = () => {
     repository: core.getInput('repository', {required: true}),
     owner: core.getInput('repository', {required: true}).split('/')[0],
     repo: core.getInput('repository', {required: true}).split('/')[1],
+    appId: core.getInput('appId', {required: false}),
+    privateKey: core.getInput('privateKey', {required: false}),
+    clientId: core.getInput('clientId', {required: false}),
+    clientSecret: core.getInput('appId', {clientSecret: false}),
 
     // This should be a token with access to your repository scoped in as a secret
     // token: ${{ secrets.GITHUB_TOKEN }}
@@ -278,12 +281,18 @@ async function run() {
     const settings = inputs()
     core.debug(settings)
 
+    let token = settings.token
+
+    if (token === '') {
+      token = getAppToken(owner,appId,privateKey,clientId,clientSecret,)
+    }
+
     // Clone remote configserver
     const configDirectory = await cloneDotenvConfig(
       settings.owner,
       settings.repo,
       settings.branch,
-      settings.token,
+      token,
       settings.destination
     )
 
