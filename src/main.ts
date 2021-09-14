@@ -11,7 +11,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => {
+const getAppToken = async (organization, appId, privateKey, clientId, clientSecret) => {
 
     /*
      * Check credentials.
@@ -42,7 +42,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
 
       // Retrieve app installations list
       const response = appOctokit.request('GET /app/installations')
-      const data = response.data
+      const data = (await response).data
 
       let installationId = Number(0)
 
@@ -79,7 +79,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
       })
 
       // Set access token
-      token = installationAuthentication.token
+      token = (await installationAuthentication).token
 
 
     // Throw error of invalid credentials if token is empty ( or not found ).

@@ -27,13 +27,14 @@
   },
   "homepage": "https://github.com/santander-group/workflow-dispatch-action#readme",
   "dependencies": {
-    "@octokit/rest": "^18.9.1",
-    "@octokit/auth-app": "^3.6.0",
     "@actions/core": "^1.3.0",
     "@actions/github": "^5.0.0",
     "@actions/io": "^1.1.0",
     "@actions/tool-cache": "^1.6.1",
+    "@octokit/auth-app": "^3.6.0",
+    "@octokit/rest": "^18.10.0",
     "dotenv": "^10.0.0",
+    "octokit": "^1.5.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
