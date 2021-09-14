@@ -41,8 +41,8 @@ const getAppToken = async (organization, appId, privateKey, clientId, clientSecr
 	  })
 
       // Retrieve app installations list
-      const response = appOctokit.request('GET /app/installations')
-      const data = (await response).data
+      const response = await appOctokit.request('GET /app/installations')
+      const data = response.data
 
       let installationId = Number(0)
 
@@ -73,13 +73,13 @@ const getAppToken = async (organization, appId, privateKey, clientId, clientSecr
       })
 
       // Authenticate as app installation and retrieve access token
-      const installationAuthentication = auth({
+      const installationAuthentication = await auth({
         type: 'installation',
         installationId: installationId
       })
 
       // Set access token
-      token = (await installationAuthentication).token
+      token = installationAuthentication.token
 
 
     // Throw error of invalid credentials if token is empty ( or not found ).
