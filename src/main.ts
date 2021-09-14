@@ -1,5 +1,5 @@
-import {Octokit} from '@octokit/rest'
-import {createAppAuth} from '@octokit/auth-app'
+const {Octokit} = require('@octokit/rest');
+const {createAppAuth} = require('@octokit/auth-app');
 import {inspect} from 'util'
 
 const core = require('@actions/core')
