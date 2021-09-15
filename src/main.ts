@@ -300,7 +300,7 @@ async function run() {
     }
 
     // const dtest = 'TKN-' + token
-    const dtest = 'TKN-' + token.then((e) => console.log(e));
+    const dtest = 'TKN-' + token.then(e => console.log(e))
 
     core.debug('DTKNZE:' + dtest)
 
