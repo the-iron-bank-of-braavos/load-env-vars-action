@@ -269,10 +269,10 @@ async function run() {
     let token = settings.token
 
     if (
-      appId !== '' &&
-      privateKey !== '' &&
-      clientId !== '' &&
-      clientSecret !== ''
+      settings.appId !== '' &&
+      settings.privateKey !== '' &&
+      settings.clientId !== '' &&
+      settings.clientSecret !== ''
     ) {
       token = getAppToken(
           settings.owner,
