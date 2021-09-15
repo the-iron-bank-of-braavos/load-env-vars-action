@@ -18,7 +18,7 @@ const getAppToken = async (
   clientSecret
 ) => {
   // Define empty token
-  //let token = 'empty'
+  let token = 'empty'
 
   try {
     // Create octokit instance as app
@@ -73,7 +73,7 @@ const getAppToken = async (
     // Set access token
     // token = installationAuthentication.token
     core.debug(installationAuthentication.token)
-    const token = installationAuthentication.token
+    token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
@@ -82,11 +82,13 @@ const getAppToken = async (
       )
     }
 
-    resolve(token)
+    return token
     
   } catch (error) {
     core.setFailed(error.message)
   }
+
+  return token
 }
 
 /**
