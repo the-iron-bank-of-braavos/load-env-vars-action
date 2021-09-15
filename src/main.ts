@@ -17,13 +17,14 @@ const {v4: uuidv4} = require('uuid')
 
 // async function getAppToken(
 
-async function getAppToken(): Promise<string> {
-  organization,
-  appId,
-  privateKey,
-  clientId,
-  clientSecret
-) {
+async function getAppToken(
+    organization,
+    appId,
+    privateKey,
+    clientId,
+    clientSecret
+  ): Promise<string> { {
+    
   // Define empty token
   let token = 'empty'
 
