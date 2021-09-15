@@ -271,11 +271,11 @@ async function run() {
 
     let token = settings.token
 
-    core.debug("DEBUG INPUTS:")
-    core.debug("APP ID:"+settings.appId)
-    core.debug("APP PRIVATE KEY:"+settings.privateKey)
-    core.debug("APP CLIENT ID:"+settings.clientId)
-    core.debug("APP CLIENT SECRET:"+settings.clientSecret)
+    core.debug('DEBUG INPUTS:')
+    core.debug('APP ID:' + settings.appId)
+    core.debug('APP PRIVATE KEY:' + settings.privateKey)
+    core.debug('APP CLIENT ID:' + settings.clientId)
+    core.debug('APP CLIENT SECRET:' + settings.clientSecret)
 
     if (
       settings.appId &&
