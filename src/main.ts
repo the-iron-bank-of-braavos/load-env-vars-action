@@ -26,7 +26,7 @@ async function getAppToken(
   return new Promise(function(resolve, reject) {
 
     // Define empty token
-    // let token = 'empty'
+    let token = 'empty'
 
     try {
       // Create octokit instance as app
@@ -39,7 +39,7 @@ async function getAppToken(
       })
 
       // Retrieve app installations list
-      const response = await appOctokit.request('GET /app/installations')
+      const response = appOctokit.request('GET /app/installations')
       const data = response.data
 
       core.debug(data)
@@ -73,7 +73,7 @@ async function getAppToken(
       })
 
       // Authenticate as app installation and retrieve access token
-      const installationAuthentication = await auth({
+      const installationAuthentication = auth({
         type: 'installation',
         installationId: installationId
       })
