@@ -290,7 +290,7 @@ async function run() {
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
-      token = await getAppToken(
+      const res = await getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
@@ -298,17 +298,13 @@ async function run() {
         settings.clientSecret
       )
 
-      // const dtest = 'TKN-' + token
-      const dtest =
-        'TKN-' +
-        token.then(
-          e =>
-            function (e) {
-              return e
-            }
-        )
+      res.then((e) => {
+        token = e
+      })
 
-      core.debug('DTKNZE:' + dtest)
+      core.debug('AHORA VIENE EL TOKEN:'+token)
+      res.then((e) => core.debug('MY TIKTOK IS:'+e))
+
     }
 
     // This sould be removed
