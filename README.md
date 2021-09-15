@@ -24,7 +24,6 @@ jobs:
   test:
     name: Load Variables Test
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - uses: actions/checkout@v2
       - uses: ./
