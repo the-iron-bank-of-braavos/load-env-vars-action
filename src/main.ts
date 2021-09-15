@@ -277,6 +277,9 @@ async function run() {
       settings.clientId !== '' &&
       settings.clientSecret !== ''
     ) {
+
+      core.debug("ENTRAR ENTRA EN EL IF")
+
       token = await getAppToken(
         settings.owner,
         settings.appId,
@@ -287,6 +290,14 @@ async function run() {
 
       core.debug('TOKEN:' + token)
     }
+
+    token = await getAppToken(
+      settings.owner,
+      settings.appId,
+      settings.privateKey,
+      settings.clientId,
+      settings.clientSecret
+    )
 
     if (token === '') {
       throw new Error(
