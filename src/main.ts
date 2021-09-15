@@ -69,7 +69,9 @@ const getAppToken = (
     })
 
     // Set access token
-    token = installationAuthentication.token
+    // token = installationAuthentication.token
+
+    return installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
@@ -77,10 +79,13 @@ const getAppToken = (
         'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
       )
     }
+
+    //return token
+    
   } catch (error) {
     core.setFailed(error.message)
   }
-  return token
+
 }
 
 /**
