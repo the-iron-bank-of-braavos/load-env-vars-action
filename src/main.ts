@@ -12,7 +12,7 @@ const {v4: uuidv4} = require('uuid')
 
 
 // new Promise<Record<string>>((value) =>
-const getAppToken = async (): Promise<Record<string, number | string>> =>(
+const getAppToken = async (): Promise<string> =>(
   organization,
   appId,
   privateKey,
