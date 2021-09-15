@@ -293,10 +293,11 @@ async function run() {
         settings.clientSecret
       )
 
-      const dtest = 'TKN-' + token
-
-      core.debug('DTKNZE:' + dtest)
     }
+
+    const dtest = 'TKN-' + token
+
+    core.debug('DTKNZE:' + dtest)
 
     // This sould be removed
     throw new Error('STOP!')
