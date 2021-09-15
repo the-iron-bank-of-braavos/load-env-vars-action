@@ -18,7 +18,7 @@ const getAppToken = async (
   clientSecret
 ) => {
   // Define empty token
-  let token = ''
+  let token = 'empty'
 
   try {
     // Create octokit instance as app
@@ -31,7 +31,7 @@ const getAppToken = async (
     })
 
     // Retrieve app installations list
-    const response = appOctokit.request('GET /app/installations')
+    const response = await appOctokit.request('GET /app/installations')
     const data = response.data
 
     let installationId = Number(0)
@@ -55,7 +55,7 @@ const getAppToken = async (
     }
 
     // Create app authentication
-    const auth = createAppAuth({
+    const auth = await createAppAuth({
       appId: appId,
       privateKey: privateKey,
       clientId: clientId,
@@ -63,7 +63,7 @@ const getAppToken = async (
     })
 
     // Authenticate as app installation and retrieve access token
-    const installationAuthentication = auth({
+    const installationAuthentication = await auth({
       type: 'installation',
       installationId: installationId
     })
