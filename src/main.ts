@@ -12,7 +12,7 @@ const {v4: uuidv4} = require('uuid')
 
 //const getAppToken = async (
 
-function getAppToken(
+async function getAppToken(
   organization,
   appId,
   privateKey,
