@@ -1,3 +1,4 @@
+// Revisar function
 import {inspect} from 'util'
 
 const core = require('@actions/core')
