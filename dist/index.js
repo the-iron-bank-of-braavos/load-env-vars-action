@@ -18852,7 +18852,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
                 }
             });
             // Retrieve app installations list
-            const response = yield appOctokit.request('GET /app/installations');
+            const response = appOctokit.request('GET /app/installations');
             const data = response.data;
             core.debug(data);
             let installationId = Number(0);
@@ -18878,7 +18878,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
                 clientSecret: clientSecret
             });
             // Authenticate as app installation and retrieve access token
-            const installationAuthentication = yield auth({
+            const installationAuthentication = auth({
                 type: 'installation',
                 installationId: installationId
             });
