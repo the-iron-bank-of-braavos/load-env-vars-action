@@ -18,7 +18,7 @@ const getAppToken = async (
   clientSecret
 ) => {
   // Define empty token
-  let token = 'empty'
+  const token = 'empty'
 
   try {
     // Create octokit instance as app
