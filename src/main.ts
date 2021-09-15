@@ -205,7 +205,7 @@ async function run() {
     core.debug('APP CLIENT ID:' + settings.clientId)
     core.debug('APP CLIENT SECRET:' + settings.clientSecret)
     */
-   
+
     if (
       settings.appId &&
       settings.privateKey &&
