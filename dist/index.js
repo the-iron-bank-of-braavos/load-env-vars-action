@@ -18843,6 +18843,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
     return __awaiter(this, void 0, void 0, function* () {
         // Define empty token
         let token = 'empty';
+        core.debug("HOLA, ESTOY DENTRO!");
         // Create octokit instance as app
         const appOctokit = github.getOctokit({
             authStrategy: createAppAuth,
@@ -18851,6 +18852,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
                 privateKey: privateKey
             }
         });
+        core.debug("HOLA, PUEDO CREAR EL OKTIKIT");
         // Retrieve app installations list
         const response = yield appOctokit.request('GET /app/installations');
         const data = response.data;
@@ -18890,7 +18892,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
         if (token === '') {
             throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
         }
-        return (Promise.resolve(token));
+        return Promise.resolve(token);
     });
 }
 /**

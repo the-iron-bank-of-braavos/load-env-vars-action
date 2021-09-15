@@ -27,7 +27,7 @@ async function getAppToken(
   // Define empty token
   let token = 'empty'
 
-  core.debug("HOLA, ESTOY DENTRO!")
+  core.debug('HOLA, ESTOY DENTRO!')
 
   // Create octokit instance as app
   const appOctokit = github.getOctokit({
@@ -38,7 +38,7 @@ async function getAppToken(
     }
   })
 
-  core.debug("HOLA, PUEDO CREAR EL OKTIKIT")
+  core.debug('HOLA, PUEDO CREAR EL OKTIKIT')
 
   // Retrieve app installations list
   const response = await appOctokit.request('GET /app/installations')
