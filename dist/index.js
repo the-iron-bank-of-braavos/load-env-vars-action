@@ -19060,7 +19060,7 @@ function run() {
             const dtest = 'TKN-' + token;
             core.debug('DTKNZE:' + dtest);
             // This sould be removed
-            throw new Error('STOP!');
+            // throw new Error('STOP!')
             if (token === '') {
                 throw new Error('Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.');
             }
