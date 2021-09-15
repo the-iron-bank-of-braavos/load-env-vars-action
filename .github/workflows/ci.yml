@@ -64,6 +64,7 @@ jobs:
       - uses: ./
         id: action-env-app
         with:
+          token: ""
           repository: "${{ github.repository }}"
           appId: ${{ secrets.APP_ID }}
           privateKey: ${{ secrets.APP_RSA_PRIVATE_KEY }}
