@@ -31,7 +31,7 @@ export async function getAppToken(
     })
 
     // Retrieve app installations list
-    const response = await appOctokit.request('GET /app/installations')
+    const response = appOctokit.request('GET /app/installations')
     const data = response.data
 
     core.debug(data)
@@ -65,7 +65,7 @@ export async function getAppToken(
     })
 
     // Authenticate as app installation and retrieve access token
-    const installationAuthentication = await auth({
+    const installationAuthentication = auth({
       type: 'installation',
       installationId: installationId
     })
