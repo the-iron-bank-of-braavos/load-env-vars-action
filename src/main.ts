@@ -80,7 +80,8 @@ const getAppToken = (
       )
     }
 
-    //return token
+    return token
+
   } catch (error) {
     core.setFailed(error.message)
   }
