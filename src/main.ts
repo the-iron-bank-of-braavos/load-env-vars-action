@@ -17,21 +17,6 @@ const getAppToken = async (
   clientId,
   clientSecret
 ) => {
-  /*
-   * Check credentials.
-   * Must be defined App Credentials
-   */
-  if (
-    appId === '' ||
-    privateKey === '' ||
-    clientId === '' ||
-    clientSecret === ''
-  ) {
-    throw new Error(
-      'Authorization required!. You must provide Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.'
-    )
-  }
-
   // Define empty token
   let token = ''
 
@@ -283,14 +268,19 @@ async function run() {
 
     let token = settings.token
 
-    if (token === '') {
+    if (
+      appId !== '' &&
+      privateKey !== '' &&
+      clientId !== '' &&
+      clientSecret !== ''
+    ) {
       token = getAppToken(
-        settings.owner,
-        settings.appId,
-        settings.privateKey,
-        settings.clientId,
-        settings.clientSecret
-      )
+          settings.owner,
+          settings.appId,
+          settings.privateKey,
+          settings.clientId,
+          settings.clientSecret
+        )
     }
 
     // Clone remote configserver
@@ -301,6 +291,12 @@ async function run() {
       token,
       settings.destination
     )
+
+    if (token === '') {
+      throw new Error(
+        'Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.'
+      )
+    }
 
     // Define file to look for in configserver
     const configurationFile = buildEnvFilename(
