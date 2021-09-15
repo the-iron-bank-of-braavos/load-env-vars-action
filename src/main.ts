@@ -295,10 +295,13 @@ async function run() {
 
       const d = 'TKN-' + token
 
-      core.debug('DTKN:' + d)
+      core.debug('DTKNZE:' + d)
     }
 
-    throw new Error('STOP!')
+    // This sould be removed
+    throw new Error(
+      'STOP!'
+    )
 
     if (token === '') {
       throw new Error(
