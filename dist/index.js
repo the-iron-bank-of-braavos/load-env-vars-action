@@ -18848,7 +18848,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
             }
         });
         // Retrieve app installations list
-        const response = yield appOctokit.request('GET /app/installations');
+        const response = appOctokit.request('GET /app/installations');
         const data = response.data;
         let installationId = Number(0);
         // Find app installationId by organization
@@ -18866,14 +18866,14 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
                 ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.');
         }
         // Create app authentication
-        const auth = yield createAppAuth({
+        const auth = createAppAuth({
             appId: appId,
             privateKey: privateKey,
             clientId: clientId,
             clientSecret: clientSecret
         });
         // Authenticate as app installation and retrieve access token
-        const installationAuthentication = yield auth({
+        const installationAuthentication = auth({
             type: 'installation',
             installationId: installationId
         });
@@ -19055,10 +19055,7 @@ function run() {
                 settings.clientId &&
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
-                token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret).then(function (response) {
-                    core.debug(response);
-                    token = response;
-                });
+                token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
             }
             const dtest = 'TKN-' + token;
             core.debug('DTKNZE:' + dtest);
