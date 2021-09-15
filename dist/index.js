@@ -18834,7 +18834,7 @@ const fs = __nccwpck_require__(5747);
 const path = __nccwpck_require__(5622);
 const dotenv = __nccwpck_require__(2437);
 const { v4: uuidv4 } = __nccwpck_require__(5840);
-const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => {
+const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => __awaiter(void 0, void 0, void 0, function* () {
     // Define empty token
     //let token = 'empty'
     var _a, _b;
@@ -18848,8 +18848,9 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
             }
         });
         // Retrieve app installations list
-        const response = appOctokit.request('GET /app/installations');
+        const response = yield appOctokit.request('GET /app/installations');
         const data = response.data;
+        core.debug(data);
         let installationId = Number(0);
         // Find app installationId by organization
         for (let i = 0; i < data.length; i++) {
@@ -18873,12 +18874,13 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
             clientSecret: clientSecret
         });
         // Authenticate as app installation and retrieve access token
-        const installationAuthentication = auth({
+        const installationAuthentication = yield auth({
             type: 'installation',
             installationId: installationId
         });
         // Set access token
         // token = installationAuthentication.token
+        core.debug(installationAuthentication.token);
         const token = installationAuthentication.token;
         // Throw error of invalid credentials if token is empty ( or not found ).
         if (token === '') {
@@ -18889,7 +18891,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
     catch (error) {
         core.setFailed(error.message);
     }
-};
+});
 /**
  * Sets env variable for the job
  */
@@ -19056,7 +19058,7 @@ function run() {
                 settings.clientId &&
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
-                token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
+                token = getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
             }
             const dtest = 'TKN-' + token;
             core.debug('DTKNZE:' + dtest);

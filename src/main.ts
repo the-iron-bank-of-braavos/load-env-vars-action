@@ -34,7 +34,7 @@ const getAppToken = async (
     const response = await appOctokit.request('GET /app/installations')
     const data = response.data
 
-    core.debug(data);
+    core.debug(data)
 
     let installationId = Number(0)
 
@@ -72,7 +72,7 @@ const getAppToken = async (
 
     // Set access token
     // token = installationAuthentication.token
-    core.debug(installationAuthentication.token);
+    core.debug(installationAuthentication.token)
     const token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
