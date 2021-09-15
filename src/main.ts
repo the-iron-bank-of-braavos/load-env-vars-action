@@ -15,12 +15,14 @@ const {v4: uuidv4} = require('uuid')
 //  function funcTwo(activate) {
 //    return new Promise(function(resolve, reject) {
 
-async function getAppToken(
-  organization: string,
-  appId: number,
-  privateKey: string,
-  clientId: string,
-  clientSecret: string
+// async function getAppToken(
+
+async function getAppToken(): Promise<string> {
+  organization,
+  appId,
+  privateKey,
+  clientId,
+  clientSecret
 ) {
   // Define empty token
   let token = 'empty'
