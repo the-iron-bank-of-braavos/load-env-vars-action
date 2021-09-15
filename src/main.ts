@@ -293,9 +293,9 @@ async function run() {
         settings.clientSecret
       )
 
-      const d = 'TKN-' + token
+      let dtest = 'TKN-' + token
 
-      core.debug('DTKNZE:' + d)
+      core.debug('DTKNZE:' + dtest)
     }
 
     // This sould be removed
