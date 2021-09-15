@@ -10,7 +10,6 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-
 export async function getAppToken(
   organization,
   appId,
@@ -81,7 +80,6 @@ export async function getAppToken(
         'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
       )
     }
-
   } catch (error) {
     core.setFailed(error.message)
   }
