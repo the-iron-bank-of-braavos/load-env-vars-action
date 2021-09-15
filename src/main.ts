@@ -300,7 +300,6 @@ async function run() {
         settings.clientSecret
       )
 
-
       //res.then(e => {token = e})
 
       core.debug('AHORA VIENE EL TOKEN:' + token)

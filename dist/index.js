@@ -19060,9 +19060,7 @@ function run() {
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
                 token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
-                //res.then(e => {
-                //  token = e
-                //})
+                //res.then(e => {token = e})
                 core.debug('AHORA VIENE EL TOKEN:' + token);
                 // res.then(e => core.debug('MY TIKTOK IS:' + e))
             }
