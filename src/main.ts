@@ -284,6 +284,14 @@ async function run() {
         settings.clientId,
         settings.clientSecret
       )
+
+      core.debug("TOKEN:"+token)
+    }
+
+    if (token === '') {
+      throw new Error(
+        'Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.'
+      )
     }
 
     // Clone remote configserver
@@ -294,12 +302,6 @@ async function run() {
       token,
       settings.destination
     )
-
-    if (token === '') {
-      throw new Error(
-        'Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.'
-      )
-    }
 
     // Define file to look for in configserver
     const configurationFile = buildEnvFilename(
