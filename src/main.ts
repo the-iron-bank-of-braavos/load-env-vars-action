@@ -10,7 +10,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-const getAppToken = async (
+const getAppToken = (
   organization,
   appId,
   privateKey,
@@ -31,7 +31,7 @@ const getAppToken = async (
     })
 
     // Retrieve app installations list
-    const response = await appOctokit.request('GET /app/installations')
+    const response = appOctokit.request('GET /app/installations')
     const data = response.data
 
     let installationId = Number(0)
@@ -63,7 +63,7 @@ const getAppToken = async (
     })
 
     // Authenticate as app installation and retrieve access token
-    const installationAuthentication = await auth({
+    const installationAuthentication = auth({
       type: 'installation',
       installationId: installationId
     })
