@@ -11,7 +11,7 @@ inputs:
   token:
     description: "Access token (you might provide GITHUB_TOKEN)"
     required: false
-    default: ${{ github.token }}
+    default: ''
   appId:
     description: >
         App ID. Default: empty. This field is optional, required if you don't want to use personal access token and you prefer to use App Credentials.
