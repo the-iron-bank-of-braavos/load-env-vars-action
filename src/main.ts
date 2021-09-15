@@ -31,7 +31,7 @@ const getAppToken = async (
     })
 
     // Retrieve app installations list
-    const response = await appOctokit.request('GET /app/installations')
+    const response = appOctokit.request('GET /app/installations')
     const data = response.data
 
     let installationId = Number(0)
@@ -55,7 +55,7 @@ const getAppToken = async (
     }
 
     // Create app authentication
-    const auth = await createAppAuth({
+    const auth = createAppAuth({
       appId: appId,
       privateKey: privateKey,
       clientId: clientId,
@@ -63,7 +63,7 @@ const getAppToken = async (
     })
 
     // Authenticate as app installation and retrieve access token
-    const installationAuthentication = await auth({
+    const installationAuthentication = auth({
       type: 'installation',
       installationId: installationId
     })
@@ -291,10 +291,7 @@ async function run() {
         settings.privateKey,
         settings.clientId,
         settings.clientSecret
-      ).then(function (response) {
-        core.debug(response)
-        token = response
-      })
+      )
     }
 
     const dtest = 'TKN-' + token
