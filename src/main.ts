@@ -20,7 +20,6 @@ export async function getAppToken(
 ): Promise<string> {
   // Define empty token
   let token = 'empty'
-
   try {
     // Create octokit instance as app
     const appOctokit = github.getOctokit({
@@ -74,7 +73,7 @@ export async function getAppToken(
     // Set access token
     // token = installationAuthentication.token
     core.debug(installationAuthentication.token)
-    const token = installationAuthentication.token
+    token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
