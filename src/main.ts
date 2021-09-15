@@ -10,16 +10,16 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-
-export function getAppToken(
+const getAppToken = async (
   organization,
   appId,
   privateKey,
   clientId,
   clientSecret
-){
+) => {
   // Define empty token
-  let token = 'empty'
+  //let token = 'empty'
+
   try {
     // Create octokit instance as app
     const appOctokit = github.getOctokit({
@@ -73,7 +73,7 @@ export function getAppToken(
     // Set access token
     // token = installationAuthentication.token
     core.debug(installationAuthentication.token)
-    token = installationAuthentication.token
+    const token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
@@ -81,11 +81,11 @@ export function getAppToken(
         'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
       )
     }
+
+    return token
   } catch (error) {
     core.setFailed(error.message)
   }
-
-  return token
 }
 
 /**
@@ -290,7 +290,7 @@ async function run() {
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
-      token = getAppToken(
+      token = await getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
