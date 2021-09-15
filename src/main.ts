@@ -82,7 +82,8 @@ const getAppToken = async (
       )
     }
 
-    return token
+    resolve(token)
+    
   } catch (error) {
     core.setFailed(error.message)
   }
