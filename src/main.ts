@@ -300,9 +300,8 @@ async function run() {
         settings.clientSecret
       )
 
-      //res.then(e => {
-      //  token = e
-      //})
+
+      //res.then(e => {token = e})
 
       core.debug('AHORA VIENE EL TOKEN:' + token)
       // res.then(e => core.debug('MY TIKTOK IS:' + e))
