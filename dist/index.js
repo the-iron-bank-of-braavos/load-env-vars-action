@@ -18890,7 +18890,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
         if (token === '') {
             throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
         }
-        return (token);
+        return (Promise.resolve(token));
     });
 }
 /**
