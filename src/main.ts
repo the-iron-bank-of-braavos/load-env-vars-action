@@ -299,14 +299,17 @@ async function run() {
       )
 
       // const dtest = 'TKN-' + token
-      const dtest = 'TKN-' + token.then((e) => function(e){
-        return e
-      });
+      const dtest =
+        'TKN-' +
+        token.then(
+          e =>
+            function (e) {
+              return e
+            }
+        )
 
       core.debug('DTKNZE:' + dtest)
     }
-
-
 
     // This sould be removed
     // throw new Error('STOP!')

@@ -19059,10 +19059,12 @@ function run() {
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
                 token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
+                // const dtest = 'TKN-' + token
+                const dtest = 'TKN-' + token.then((e) => function (e) {
+                    return e;
+                });
+                core.debug('DTKNZE:' + dtest);
             }
-            // const dtest = 'TKN-' + token
-            const dtest = 'TKN-' + token.then((e) => console.log(e));
-            core.debug('DTKNZE:' + dtest);
             // This sould be removed
             // throw new Error('STOP!')
             if (token === '') {
