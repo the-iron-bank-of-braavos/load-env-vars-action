@@ -274,7 +274,7 @@ async function run() {
       settings.clientId !== '' &&
       settings.clientSecret !== ''
     ) {
-      token = getAppToken(
+      token = await getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
