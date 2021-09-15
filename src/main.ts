@@ -18,7 +18,7 @@ const getAppToken = (
   clientSecret
 ) => {
   // Define empty token
-  let token = 'empty'
+  //let token = 'empty'
 
   try {
     // Create octokit instance as app
@@ -81,7 +81,7 @@ const getAppToken = (
     }
 
     //return token
-    
+
   } catch (error) {
     core.setFailed(error.message)
   }
