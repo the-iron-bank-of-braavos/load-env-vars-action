@@ -18835,9 +18835,9 @@ const path = __nccwpck_require__(5622);
 const dotenv = __nccwpck_require__(2437);
 const { v4: uuidv4 } = __nccwpck_require__(5840);
 const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => __awaiter(void 0, void 0, void 0, function* () {
-    // Define empty token
-    //let token = 'empty'
     var _a, _b;
+    // Define empty token
+    let token = 'empty';
     try {
         // Create octokit instance as app
         const appOctokit = github.getOctokit({
@@ -18881,7 +18881,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
         // Set access token
         // token = installationAuthentication.token
         core.debug(installationAuthentication.token);
-        const token = installationAuthentication.token;
+        token = installationAuthentication.token;
         // Throw error of invalid credentials if token is empty ( or not found ).
         if (token === '') {
             throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
@@ -18891,6 +18891,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
     catch (error) {
         core.setFailed(error.message);
     }
+    return token;
 });
 /**
  * Sets env variable for the job
@@ -19058,12 +19059,12 @@ function run() {
                 settings.clientId &&
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
-                const res = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
-                res.then((e) => {
-                    token = e;
-                });
+                token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
+                //res.then(e => {
+                //  token = e
+                //})
                 core.debug('AHORA VIENE EL TOKEN:' + token);
-                res.then((e) => core.debug('MY TIKTOK IS:' + e));
+                // res.then(e => core.debug('MY TIKTOK IS:' + e))
             }
             // This sould be removed
             // throw new Error('STOP!')

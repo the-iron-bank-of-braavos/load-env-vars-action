@@ -83,7 +83,6 @@ const getAppToken = async (
     }
 
     return token
-    
   } catch (error) {
     core.setFailed(error.message)
   }
@@ -300,7 +299,6 @@ async function run() {
         settings.clientId,
         settings.clientSecret
       )
-
 
       //res.then(e => {
       //  token = e
