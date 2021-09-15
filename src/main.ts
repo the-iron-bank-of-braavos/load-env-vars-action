@@ -11,14 +11,13 @@ const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
 
-// new Promise<Record<string>>((value) =>
-const getAppToken = async (): Promise<string> =>(
+export async function getAppToken(
   organization,
   appId,
   privateKey,
   clientId,
   clientSecret
-) => {
+): Promise<String> {
   // Define empty token
   //let token = 'empty'
 
@@ -292,7 +291,7 @@ async function run() {
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
-      token = await getAppToken(
+      token = getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
