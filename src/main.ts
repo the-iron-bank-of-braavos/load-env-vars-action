@@ -15,9 +15,15 @@ const {v4: uuidv4} = require('uuid')
 //  function funcTwo(activate) {
 //    return new Promise(function(resolve, reject) {
 
-function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
-  // Define empty token
-  let token = 'empty'
+export async function getAppToken(
+  organization,
+  appId,
+  privateKey,
+  clientId,
+  clientSecret
+){
+    // Define empty token
+    let token = 'empty'
 
   try {
     // Create octokit instance as app
