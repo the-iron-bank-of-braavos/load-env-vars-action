@@ -23,7 +23,7 @@ async function getAppToken(
   privateKey,
   clientId,
   clientSecret
-): Promise<string> {
+): Promise<void> {
   // Define empty token
   let token = 'empty'
 
