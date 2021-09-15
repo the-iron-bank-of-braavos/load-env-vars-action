@@ -25,69 +25,68 @@ async function getAppToken(
   // Define empty token
   let token = 'empty'
 
-    // Create octokit instance as app
-    const appOctokit = github.getOctokit({
-      authStrategy: createAppAuth,
-      auth: {
-        appId: appId,
-        privateKey: privateKey
-      }
-    })
-
-    // Retrieve app installations list
-    const response = await appOctokit.request('GET /app/installations')
-    const data = response.data
-
-    core.debug(data)
-
-    let installationId = Number(0)
-
-    // Find app installationId by organization
-    for (let i = 0; i < data.length; i++) {
-      core.debug(`Installation: ${inspect(data[i])}`)
-      if (data[i]?.account?.login === organization) {
-        installationId = data[i].id
-        break
-      }
-    }
-
-    core.debug(`Installation ID: ${inspect(installationId)}`)
-    if (installationId === 0) {
-      throw new Error(
-        'The ' +
-          organization +
-          ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.'
-      )
-    }
-
-    // Create app authentication
-    const auth = createAppAuth({
+  // Create octokit instance as app
+  const appOctokit = github.getOctokit({
+    authStrategy: createAppAuth,
+    auth: {
       appId: appId,
-      privateKey: privateKey,
-      clientId: clientId,
-      clientSecret: clientSecret
-    })
-
-    // Authenticate as app installation and retrieve access token
-    const installationAuthentication = await auth({
-      type: 'installation',
-      installationId: installationId
-    })
-
-    // Set access token
-    // token = installationAuthentication.token
-    core.debug(installationAuthentication.token)
-    token = installationAuthentication.token
-
-    // Throw error of invalid credentials if token is empty ( or not found ).
-    if (token === '') {
-      throw new Error(
-        'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
-      )
+      privateKey: privateKey
     }
+  })
 
-    return token
+  // Retrieve app installations list
+  const response = await appOctokit.request('GET /app/installations')
+  const data = response.data
 
+  core.debug(data)
+
+  let installationId = Number(0)
+
+  // Find app installationId by organization
+  for (let i = 0; i < data.length; i++) {
+    core.debug(`Installation: ${inspect(data[i])}`)
+    if (data[i]?.account?.login === organization) {
+      installationId = data[i].id
+      break
+    }
+  }
+
+  core.debug(`Installation ID: ${inspect(installationId)}`)
+  if (installationId === 0) {
+    throw new Error(
+      'The ' +
+        organization +
+        ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.'
+    )
+  }
+
+  // Create app authentication
+  const auth = createAppAuth({
+    appId: appId,
+    privateKey: privateKey,
+    clientId: clientId,
+    clientSecret: clientSecret
+  })
+
+  // Authenticate as app installation and retrieve access token
+  const installationAuthentication = await auth({
+    type: 'installation',
+    installationId: installationId
+  })
+
+  // Set access token
+  // token = installationAuthentication.token
+  core.debug(installationAuthentication.token)
+  token = installationAuthentication.token
+
+  // Throw error of invalid credentials if token is empty ( or not found ).
+  if (token === '') {
+    throw new Error(
+      'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
+    )
+  }
+
+  return token
 }
 
 /**
