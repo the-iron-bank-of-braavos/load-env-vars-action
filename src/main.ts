@@ -233,7 +233,7 @@ const inputs = () => {
 
     // This should be a token with access to your repository scoped in as a secret
     // token: ${{ secrets.GITHUB_TOKEN }}
-    token: core.getInput('token', {required: true}),
+    token: core.getInput('token', {required: false}),
 
     // The remote branch to checkout (default: main)
     branch: core.getInput('branch') || 'main',
