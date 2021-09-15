@@ -81,11 +81,9 @@ const getAppToken = (
     }
 
     //return token
-
   } catch (error) {
     core.setFailed(error.message)
   }
-
 }
 
 /**

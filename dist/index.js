@@ -18835,9 +18835,9 @@ const path = __nccwpck_require__(5622);
 const dotenv = __nccwpck_require__(2437);
 const { v4: uuidv4 } = __nccwpck_require__(5840);
 const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => {
-    var _a, _b;
     // Define empty token
-    let token = 'empty';
+    //let token = 'empty'
+    var _a, _b;
     try {
         // Create octokit instance as app
         const appOctokit = github.getOctokit({
@@ -18878,16 +18878,17 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
             installationId: installationId
         });
         // Set access token
-        token = installationAuthentication.token;
+        // token = installationAuthentication.token
+        const token = installationAuthentication.token;
         // Throw error of invalid credentials if token is empty ( or not found ).
         if (token === '') {
             throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
         }
+        //return token
     }
     catch (error) {
         core.setFailed(error.message);
     }
-    return token;
 };
 /**
  * Sets env variable for the job
