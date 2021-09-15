@@ -285,7 +285,7 @@ async function run() {
         settings.clientSecret
       )
 
-      core.debug("TOKEN:"+token)
+      core.debug('TOKEN:' + token)
     }
 
     if (token === '') {

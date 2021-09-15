@@ -19050,12 +19050,13 @@ function run() {
                 settings.clientId !== '' &&
                 settings.clientSecret !== '') {
                 token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
+                core.debug("TOKEN:" + token);
             }
-            // Clone remote configserver
-            const configDirectory = yield cloneDotenvConfig(settings.owner, settings.repo, settings.branch, token, settings.destination);
             if (token === '') {
                 throw new Error('Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.');
             }
+            // Clone remote configserver
+            const configDirectory = yield cloneDotenvConfig(settings.owner, settings.repo, settings.branch, token, settings.destination);
             // Define file to look for in configserver
             const configurationFile = buildEnvFilename(configDirectory, settings.directory, settings.filename, settings.profile);
             core.info(`Expected configuration filename: [${configurationFile}]`);
