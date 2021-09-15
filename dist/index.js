@@ -19058,12 +19058,12 @@ function run() {
                 settings.clientId &&
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
-                token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
-                // const dtest = 'TKN-' + token
-                const dtest = 'TKN-' + token.then((e) => function (e) {
-                    return e;
+                const res = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
+                res.then((e) => {
+                    token = e;
                 });
-                core.debug('DTKNZE:' + dtest);
+                core.debug('AHORA VIENE EL TOKEN:' + token);
+                res.then((e) => core.debug('MY TIKTOK IS:' + e));
             }
             // This sould be removed
             // throw new Error('STOP!')
