@@ -10,15 +10,17 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-export async function getAppToken(
+
+// new Promise<Record<string>>((value) =>
+const getAppToken = async (): Promise<Record<string, number | string>> =>(
   organization,
   appId,
   privateKey,
   clientId,
   clientSecret
-): Promise<string> {
+) => {
   // Define empty token
-  let token = 'empty'
+  //let token = 'empty'
 
   try {
     // Create octokit instance as app
@@ -31,7 +33,7 @@ export async function getAppToken(
     })
 
     // Retrieve app installations list
-    const response = appOctokit.request('GET /app/installations')
+    const response = await appOctokit.request('GET /app/installations')
     const data = response.data
 
     core.debug(data)
@@ -65,7 +67,7 @@ export async function getAppToken(
     })
 
     // Authenticate as app installation and retrieve access token
-    const installationAuthentication = auth({
+    const installationAuthentication = await auth({
       type: 'installation',
       installationId: installationId
     })
@@ -73,7 +75,7 @@ export async function getAppToken(
     // Set access token
     // token = installationAuthentication.token
     core.debug(installationAuthentication.token)
-    token = installationAuthentication.token
+    const token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
@@ -81,11 +83,11 @@ export async function getAppToken(
         'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
       )
     }
+
+    return token
   } catch (error) {
     core.setFailed(error.message)
   }
-
-  return token
 }
 
 /**
