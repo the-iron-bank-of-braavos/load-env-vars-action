@@ -272,10 +272,10 @@ async function run() {
     let token = settings.token
 
     if (
-      settings.appId !== '' &&
-      settings.privateKey !== '' &&
-      settings.clientId !== '' &&
-      settings.clientSecret !== ''
+      settings.appId &&
+      settings.privateKey &&
+      settings.clientId &&
+      settings.clientSecret
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
