@@ -10,7 +10,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-const getAppToken = (
+const getAppToken = async (
   organization,
   appId,
   privateKey,
