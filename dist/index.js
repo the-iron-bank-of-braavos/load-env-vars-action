@@ -18837,7 +18837,7 @@ const { v4: uuidv4 } = __nccwpck_require__(5840);
 const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     // Define empty token
-    let token = '';
+    let token = 'empty';
     try {
         // Create octokit instance as app
         const appOctokit = github.getOctokit({
@@ -18848,7 +18848,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
             }
         });
         // Retrieve app installations list
-        const response = appOctokit.request('GET /app/installations');
+        const response = yield appOctokit.request('GET /app/installations');
         const data = response.data;
         let installationId = Number(0);
         // Find app installationId by organization
@@ -18866,14 +18866,14 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
                 ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.');
         }
         // Create app authentication
-        const auth = createAppAuth({
+        const auth = yield createAppAuth({
             appId: appId,
             privateKey: privateKey,
             clientId: clientId,
             clientSecret: clientSecret
         });
         // Authenticate as app installation and retrieve access token
-        const installationAuthentication = auth({
+        const installationAuthentication = yield auth({
             type: 'installation',
             installationId: installationId
         });
