@@ -291,7 +291,7 @@ async function run() {
         settings.privateKey,
         settings.clientId,
         settings.clientSecret
-      ).then(function(response){
+      ).then(function (response) {
         core.debug(response)
         token = response
       })
