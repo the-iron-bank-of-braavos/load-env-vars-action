@@ -10,92 +10,6 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-//const getAppToken = async (
-
-//  function funcTwo(activate) {
-//    return new Promise(function(resolve, reject) {
-
-// async function getAppToken(
-
-async function getAppToken(
-  organization,
-  appId,
-  privateKey,
-  clientId,
-  clientSecret
-): Promise<void> {
-  // Define empty token
-  let token = 'empty'
-
-  core.debug('HOLA, ESTOY DENTRO!')
-
-  // Create octokit instance as app
-  const appOctokit = github.getOctokit({
-    authStrategy: createAppAuth,
-    auth: {
-      appId: appId,
-      privateKey: privateKey
-    }
-  })
-
-  core.debug('HOLA, PUEDO CREAR EL OKTIKIT')
-
-  // Retrieve app installations list
-  const response = await appOctokit.request('GET /app/installations')
-  const data = response.data
-
-  core.debug(data)
-
-  let installationId = Number(0)
-
-  // Find app installationId by organization
-  for (let i = 0; i < data.length; i++) {
-    core.debug(`Installation: ${inspect(data[i])}`)
-    if (data[i]?.account?.login === organization) {
-      installationId = data[i].id
-      break
-    }
-  }
-
-  core.debug(`Installation ID: ${inspect(installationId)}`)
-  if (installationId === 0) {
-    throw new Error(
-      'The ' +
-        organization +
-        ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.'
-    )
-  }
-
-  // Create app authentication
-  const auth = createAppAuth({
-    appId: appId,
-    privateKey: privateKey,
-    clientId: clientId,
-    clientSecret: clientSecret
-  })
-
-  // Authenticate as app installation and retrieve access token
-  const installationAuthentication = await auth({
-    type: 'installation',
-    installationId: installationId
-  })
-
-  // Set access token
-  // token = installationAuthentication.token
-  core.debug(installationAuthentication.token)
-  token = installationAuthentication.token
-
-  // Throw error of invalid credentials if token is empty ( or not found ).
-  if (token === '') {
-    throw new Error(
-      'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
-    )
-  }
-
-  Promise.resolve(token)
-  // return(token)
-}
-
 /**
  * Sets env variable for the job
  */
@@ -296,37 +210,18 @@ async function run() {
       settings.clientId &&
       settings.clientSecret
     ) {
-      core.debug('ENTRAR ENTRA EN EL IF')
-
-      /*
-      token = await getAppToken(
-        settings.owner,
-        settings.appId,
-        settings.privateKey,
-        settings.clientId,
-        settings.clientSecret
-      )
-      */
-
-      // core.debug('AHORA VIENE EL TOKEN:' + token)
-      // res.then(e => core.debug('MY TIKTOK IS:' + e))
-
       // Create octokit instance as app
       const appOctokit = github.getOctokit({
         authStrategy: createAppAuth,
         auth: {
-          appId: appId,
-          privateKey: privateKey
+          appId: settings.appId,
+          privateKey: settings.privateKey
         }
       })
-
-      core.debug('HOLA, PUEDO CREAR EL OKTIKIT')
 
       // Retrieve app installations list
       const response = await appOctokit.request('GET /app/installations')
       const data = response.data
-
-      core.debug(data)
 
       let installationId = Number(0)
 
@@ -350,10 +245,10 @@ async function run() {
 
       // Create app authentication
       const auth = createAppAuth({
-        appId: appId,
-        privateKey: privateKey,
-        clientId: clientId,
-        clientSecret: clientSecret
+        appId: settings.appId,
+        privateKey: settings.privateKey,
+        clientId: settings.clientId,
+        clientSecret: settings.clientSecret
       })
 
       // Authenticate as app installation and retrieve access token
