@@ -15,12 +15,12 @@ const {v4: uuidv4} = require('uuid')
 //  function funcTwo(activate) {
 //    return new Promise(function(resolve, reject) {
 
-export async function getAppToken(
-  organization,
-  appId,
-  privateKey,
-  clientId,
-  clientSecret
+async function getAppToken(
+  organization: string,
+  appId: number,
+  privateKey: string,
+  clientId: string,
+  clientSecret: string
 ) {
   // Define empty token
   let token = 'empty'
@@ -86,6 +86,9 @@ export async function getAppToken(
         'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
       )
     }
+
+    return token
+    
   } catch (error) {
     core.setFailed(error.message)
   }
