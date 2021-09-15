@@ -293,7 +293,7 @@ async function run() {
         settings.clientSecret
       )
 
-      const d = "TKN-"+token
+      const d = 'TKN-' + token
 
       core.debug('DTKN:' + d)
     }
