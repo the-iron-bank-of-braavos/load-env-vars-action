@@ -88,7 +88,7 @@ async function getAppToken(
     )
   }
 
-  return token
+  return(token)
 }
 
 /**
