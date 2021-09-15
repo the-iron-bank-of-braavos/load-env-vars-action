@@ -31,8 +31,10 @@ const getAppToken = (
     })
 
     // Retrieve app installations list
-    const response = appOctokit.request('GET /app/installations')
+    const response = await appOctokit.request('GET /app/installations')
     const data = response.data
+
+    core.debug(data);
 
     let installationId = Number(0)
 
@@ -63,14 +65,14 @@ const getAppToken = (
     })
 
     // Authenticate as app installation and retrieve access token
-    const installationAuthentication = auth({
+    const installationAuthentication = await auth({
       type: 'installation',
       installationId: installationId
     })
 
     // Set access token
     // token = installationAuthentication.token
-
+    core.debug(installationAuthentication.token);
     const token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
@@ -288,7 +290,7 @@ async function run() {
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
-      token = await getAppToken(
+      token = getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
