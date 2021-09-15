@@ -18813,9 +18813,6 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 __nccwpck_require__.r(__webpack_exports__);
-/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "getAppToken": () => (/* binding */ getAppToken)
-/* harmony export */ });
 /* harmony import */ var util__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(1669);
 /* harmony import */ var util__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(util__WEBPACK_IMPORTED_MODULE_0__);
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -18893,6 +18890,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
             if (token === '') {
                 throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
             }
+            return token;
         }
         catch (error) {
             core.setFailed(error.message);

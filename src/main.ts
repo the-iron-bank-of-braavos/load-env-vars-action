@@ -88,7 +88,6 @@ async function getAppToken(
     }
 
     return token
-    
   } catch (error) {
     core.setFailed(error.message)
   }
