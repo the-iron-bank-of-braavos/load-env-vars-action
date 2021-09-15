@@ -19055,7 +19055,7 @@ function run() {
                 settings.clientId &&
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
-                token = getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
+                token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
             }
             const dtest = 'TKN-' + token;
             core.debug('DTKNZE:' + dtest);
