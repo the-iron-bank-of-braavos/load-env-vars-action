@@ -285,7 +285,7 @@ async function run() {
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
-      token = await getAppToken(
+      token = getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
@@ -293,7 +293,7 @@ async function run() {
         settings.clientSecret
       )
 
-      let dtest = 'TKN-' + token
+      const dtest = 'TKN-' + token
 
       core.debug('DTKNZE:' + dtest)
     }
