@@ -25,7 +25,6 @@ async function getAppToken(
   // Define empty token
   let token = 'empty'
 
-  try {
     // Create octokit instance as app
     const appOctokit = github.getOctokit({
       authStrategy: createAppAuth,
@@ -88,11 +87,7 @@ async function getAppToken(
     }
 
     return token
-  } catch (error) {
-    core.setFailed(error.message)
-  }
 
-  return token
 }
 
 /**
