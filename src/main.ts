@@ -73,7 +73,7 @@ const getAppToken = async (
     // Set access token
     // token = installationAuthentication.token
     core.debug(installationAuthentication.token)
-    token = installationAuthentication.token
+    return installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
