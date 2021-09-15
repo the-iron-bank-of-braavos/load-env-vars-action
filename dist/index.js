@@ -18834,7 +18834,7 @@ const fs = __nccwpck_require__(5747);
 const path = __nccwpck_require__(5622);
 const dotenv = __nccwpck_require__(2437);
 const { v4: uuidv4 } = __nccwpck_require__(5840);
-const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => __awaiter(void 0, void 0, void 0, function* () {
+const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => {
     var _a, _b;
     // Define empty token
     let token = '';
@@ -18847,7 +18847,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
         }
     });
     // Retrieve app installations list
-    const response = yield appOctokit.request('GET /app/installations');
+    const response = appOctokit.request('GET /app/installations');
     const data = response.data;
     let installationId = Number(0);
     // Find app installationId by organization
@@ -18872,7 +18872,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
         clientSecret: clientSecret
     });
     // Authenticate as app installation and retrieve access token
-    const installationAuthentication = yield auth({
+    const installationAuthentication = auth({
         type: 'installation',
         installationId: installationId
     });
@@ -18883,7 +18883,7 @@ const getAppToken = (organization, appId, privateKey, clientId, clientSecret) =>
         throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
     }
     return token;
-});
+};
 /**
  * Sets env variable for the job
  */
