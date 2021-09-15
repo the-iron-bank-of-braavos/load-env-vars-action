@@ -10,15 +10,17 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-const getAppToken = async (
+//const getAppToken = async (
+
+function getAppToken(
   organization,
   appId,
   privateKey,
   clientId,
   clientSecret
-) => {
+): Promise<string> {
   // Define empty token
-  const token = 'empty'
+  let token = 'empty'
 
   try {
     // Create octokit instance as app
@@ -73,7 +75,7 @@ const getAppToken = async (
     // Set access token
     // token = installationAuthentication.token
     core.debug(installationAuthentication.token)
-    return installationAuthentication.token
+    token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
@@ -82,7 +84,6 @@ const getAppToken = async (
       )
     }
 
-    return token
   } catch (error) {
     core.setFailed(error.message)
   }
