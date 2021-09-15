@@ -290,7 +290,7 @@ async function run() {
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
-      token = getAppToken(
+      token = await getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
