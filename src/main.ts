@@ -225,10 +225,10 @@ async function run() {
 
       let installationId = Number(0)
 
-      // Find app installationId by organization
+      // Find app installationId by owner
       for (let i = 0; i < data.length; i++) {
         core.debug(`Installation: ${inspect(data[i])}`)
-        if (data[i]?.account?.login === organization) {
+        if (data[i]?.account?.login === settings.owner) {
           installationId = data[i].id
           break
         }
@@ -238,7 +238,7 @@ async function run() {
       if (installationId === 0) {
         throw new Error(
           'The ' +
-            organization +
+            settings.owner +
             ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.'
         )
       }
