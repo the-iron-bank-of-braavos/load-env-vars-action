@@ -15,14 +15,13 @@ const {v4: uuidv4} = require('uuid')
 //  function funcTwo(activate) {
 //    return new Promise(function(resolve, reject) {
 
-async function getAppToken(
+function getAppToken(
   organization,
   appId,
   privateKey,
   clientId,
   clientSecret
-) {
-  return new Promise(function (resolve, reject) {
+){
     // Define empty token
     let token = 'empty'
 
@@ -88,11 +87,11 @@ async function getAppToken(
         )
       }
 
-      resolve(token)
     } catch (error) {
       core.setFailed(error.message)
     }
-  })
+
+    return token
 }
 
 /**
