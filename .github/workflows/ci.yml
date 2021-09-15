@@ -45,6 +45,7 @@ jobs:
       - uses: ./
         id: action-env
         with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
           repository: "${{ github.repository }}"         
       - name: "See exported values"
         run: env        
