@@ -21,9 +21,9 @@ export async function getAppToken(
   privateKey,
   clientId,
   clientSecret
-){
-    // Define empty token
-    let token = 'empty'
+) {
+  // Define empty token
+  let token = 'empty'
 
   try {
     // Create octokit instance as app
