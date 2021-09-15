@@ -92,7 +92,7 @@ async function getAppToken(
     )
   }
 
-  return Promise.resolve(token)
+  Promise.resolve(token)
   // return(token)
 }
 
