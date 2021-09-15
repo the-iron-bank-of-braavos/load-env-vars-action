@@ -71,7 +71,7 @@ const getAppToken = (
     // Set access token
     // token = installationAuthentication.token
 
-    return installationAuthentication.token
+    const token = installationAuthentication.token
 
     // Throw error of invalid credentials if token is empty ( or not found ).
     if (token === '') {
