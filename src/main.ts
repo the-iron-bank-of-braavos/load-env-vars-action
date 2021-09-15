@@ -301,16 +301,13 @@ async function run() {
     ) {
       core.debug('ENTRAR ENTRA EN EL IF')
 
-      const res = await getAppToken(
+      token = await getAppToken(
         settings.owner,
         settings.appId,
         settings.privateKey,
         settings.clientId,
         settings.clientSecret
       )
-
-      res.then(e => core.debug('MY TIKTOK IS:' + e))
-      res.then(e => {token = e})
 
       core.debug('AHORA VIENE EL TOKEN:' + token)
       // res.then(e => core.debug('MY TIKTOK IS:' + e))
