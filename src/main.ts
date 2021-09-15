@@ -19,7 +19,7 @@ export async function getAppToken(
   clientSecret
 ): Promise<String> {
   // Define empty token
-  //let token = 'empty'
+  let token = 'empty'
 
   try {
     // Create octokit instance as app
@@ -83,10 +83,11 @@ export async function getAppToken(
       )
     }
 
-    return token
   } catch (error) {
     core.setFailed(error.message)
   }
+
+  return token
 }
 
 /**
