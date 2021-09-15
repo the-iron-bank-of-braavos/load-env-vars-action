@@ -298,9 +298,7 @@ async function run() {
       core.debug('DTKN:' + d)
     }
 
-    throw new Error(
-      'STOP!'
-    )
+    throw new Error('STOP!')
 
     if (token === '') {
       throw new Error(

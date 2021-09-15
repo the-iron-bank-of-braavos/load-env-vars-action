@@ -19056,9 +19056,10 @@ function run() {
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
                 token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
-                const d = "TKN-" + token;
+                const d = 'TKN-' + token;
                 core.debug('DTKN:' + d);
             }
+            throw new Error('STOP!');
             if (token === '') {
                 throw new Error('Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.');
             }
