@@ -275,12 +275,12 @@ async function run() {
       settings.clientSecret !== ''
     ) {
       token = getAppToken(
-          settings.owner,
-          settings.appId,
-          settings.privateKey,
-          settings.clientId,
-          settings.clientSecret
-        )
+        settings.owner,
+        settings.appId,
+        settings.privateKey,
+        settings.clientId,
+        settings.clientSecret
+      )
     }
 
     // Clone remote configserver

@@ -18836,16 +18836,6 @@ const dotenv = __nccwpck_require__(2437);
 const { v4: uuidv4 } = __nccwpck_require__(5840);
 const getAppToken = (organization, appId, privateKey, clientId, clientSecret) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    /*
-     * Check credentials.
-     * Must be defined App Credentials
-     */
-    if (appId === '' ||
-        privateKey === '' ||
-        clientId === '' ||
-        clientSecret === '') {
-        throw new Error('Authorization required!. You must provide Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.');
-    }
     // Define empty token
     let token = '';
     // Create octokit instance as app
@@ -19050,11 +19040,17 @@ function run() {
             const settings = inputs();
             core.debug(settings);
             let token = settings.token;
-            if (token === '') {
+            if (settings.appId !== '' &&
+                settings.privateKey !== '' &&
+                settings.clientId !== '' &&
+                settings.clientSecret !== '') {
                 token = getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
             }
             // Clone remote configserver
             const configDirectory = yield cloneDotenvConfig(settings.owner, settings.repo, settings.branch, token, settings.destination);
+            if (token === '') {
+                throw new Error('Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.');
+            }
             // Define file to look for in configserver
             const configurationFile = buildEnvFilename(configDirectory, settings.directory, settings.filename, settings.profile);
             core.info(`Expected configuration filename: [${configurationFile}]`);
