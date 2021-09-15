@@ -19045,11 +19045,11 @@ function run() {
             const settings = inputs();
             core.debug(settings);
             let token = settings.token;
-            if (settings.appId !== '' &&
-                settings.privateKey !== '' &&
-                settings.clientId !== '' &&
-                settings.clientSecret !== '') {
-                core.debug("ENTRAR ENTRA EN EL IF");
+            if (settings.appId &&
+                settings.privateKey &&
+                settings.clientId &&
+                settings.clientSecret) {
+                core.debug('ENTRAR ENTRA EN EL IF');
                 token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
                 core.debug('TOKEN:' + token);
             }
