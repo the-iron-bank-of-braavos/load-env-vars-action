@@ -18841,7 +18841,7 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         // Define empty token
-        //let token = 'empty'
+        let token = 'empty';
         try {
             // Create octokit instance as app
             const appOctokit = github.getOctokit({
@@ -18885,16 +18885,16 @@ function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
             // Set access token
             // token = installationAuthentication.token
             core.debug(installationAuthentication.token);
-            const token = installationAuthentication.token;
+            token = installationAuthentication.token;
             // Throw error of invalid credentials if token is empty ( or not found ).
             if (token === '') {
                 throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
             }
-            return token;
         }
         catch (error) {
             core.setFailed(error.message);
         }
+        return token;
     });
 }
 /**
