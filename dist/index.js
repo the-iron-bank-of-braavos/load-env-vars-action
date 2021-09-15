@@ -19049,7 +19049,7 @@ function run() {
                 settings.privateKey !== '' &&
                 settings.clientId !== '' &&
                 settings.clientSecret !== '') {
-                token = getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
+                token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
             }
             // Clone remote configserver
             const configDirectory = yield cloneDotenvConfig(settings.owner, settings.repo, settings.branch, token, settings.destination);
