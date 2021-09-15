@@ -292,7 +292,6 @@ async function run() {
         settings.clientId,
         settings.clientSecret
       )
-
     }
 
     const dtest = 'TKN-' + token
