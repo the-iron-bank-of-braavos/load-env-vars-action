@@ -19,8 +19,9 @@ async function getAppToken(
   clientId,
   clientSecret
 ): Promise<string> {
+
   // Define empty token
-  let token = 'empty'
+  // let token = 'empty'
 
   try {
     // Create octokit instance as app
@@ -83,11 +84,12 @@ async function getAppToken(
         'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
       )
     }
+
+    Promise.resolve(token);
+
   } catch (error) {
     core.setFailed(error.message)
   }
-
-  return token
 }
 
 /**
