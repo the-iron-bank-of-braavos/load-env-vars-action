@@ -10,13 +10,14 @@ const path = require('path')
 const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
-export async function getAppToken(
+
+export function getAppToken(
   organization,
   appId,
   privateKey,
   clientId,
   clientSecret
-): Promise<string> {
+){
   // Define empty token
   let token = 'empty'
   try {
