@@ -18835,64 +18835,68 @@ const path = __nccwpck_require__(5622);
 const dotenv = __nccwpck_require__(2437);
 const { v4: uuidv4 } = __nccwpck_require__(5840);
 //const getAppToken = async (
+//  function funcTwo(activate) {
+//    return new Promise(function(resolve, reject) {
 function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
-    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
-        // Define empty token
-        let token = 'empty';
-        try {
-            // Create octokit instance as app
-            const appOctokit = github.getOctokit({
-                authStrategy: createAppAuth,
-                auth: {
+        return new Promise(function (resolve, reject) {
+            var _a, _b;
+            // Define empty token
+            let token = 'empty';
+            try {
+                // Create octokit instance as app
+                const appOctokit = github.getOctokit({
+                    authStrategy: createAppAuth,
+                    auth: {
+                        appId: appId,
+                        privateKey: privateKey
+                    }
+                });
+                // Retrieve app installations list
+                const response = appOctokit.request('GET /app/installations');
+                const data = response.data;
+                core.debug(data);
+                let installationId = Number(0);
+                // Find app installationId by organization
+                for (let i = 0; i < data.length; i++) {
+                    core.debug(`Installation: ${(0,util__WEBPACK_IMPORTED_MODULE_0__.inspect)(data[i])}`);
+                    if (((_b = (_a = data[i]) === null || _a === void 0 ? void 0 : _a.account) === null || _b === void 0 ? void 0 : _b.login) === organization) {
+                        installationId = data[i].id;
+                        break;
+                    }
+                }
+                core.debug(`Installation ID: ${(0,util__WEBPACK_IMPORTED_MODULE_0__.inspect)(installationId)}`);
+                if (installationId === 0) {
+                    throw new Error('The ' +
+                        organization +
+                        ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.');
+                }
+                // Create app authentication
+                const auth = createAppAuth({
                     appId: appId,
-                    privateKey: privateKey
+                    privateKey: privateKey,
+                    clientId: clientId,
+                    clientSecret: clientSecret
+                });
+                // Authenticate as app installation and retrieve access token
+                const installationAuthentication = auth({
+                    type: 'installation',
+                    installationId: installationId
+                });
+                // Set access token
+                // token = installationAuthentication.token
+                core.debug(installationAuthentication.token);
+                token = installationAuthentication.token;
+                // Throw error of invalid credentials if token is empty ( or not found ).
+                if (token === '') {
+                    throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
                 }
-            });
-            // Retrieve app installations list
-            const response = yield appOctokit.request('GET /app/installations');
-            const data = response.data;
-            core.debug(data);
-            let installationId = Number(0);
-            // Find app installationId by organization
-            for (let i = 0; i < data.length; i++) {
-                core.debug(`Installation: ${(0,util__WEBPACK_IMPORTED_MODULE_0__.inspect)(data[i])}`);
-                if (((_b = (_a = data[i]) === null || _a === void 0 ? void 0 : _a.account) === null || _b === void 0 ? void 0 : _b.login) === organization) {
-                    installationId = data[i].id;
-                    break;
-                }
+                resolve(token);
             }
-            core.debug(`Installation ID: ${(0,util__WEBPACK_IMPORTED_MODULE_0__.inspect)(installationId)}`);
-            if (installationId === 0) {
-                throw new Error('The ' +
-                    organization +
-                    ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.');
+            catch (error) {
+                core.setFailed(error.message);
             }
-            // Create app authentication
-            const auth = createAppAuth({
-                appId: appId,
-                privateKey: privateKey,
-                clientId: clientId,
-                clientSecret: clientSecret
-            });
-            // Authenticate as app installation and retrieve access token
-            const installationAuthentication = yield auth({
-                type: 'installation',
-                installationId: installationId
-            });
-            // Set access token
-            // token = installationAuthentication.token
-            core.debug(installationAuthentication.token);
-            token = installationAuthentication.token;
-            // Throw error of invalid credentials if token is empty ( or not found ).
-            if (token === '') {
-                throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
-            }
-        }
-        catch (error) {
-            core.setFailed(error.message);
-        }
-        return token;
+        });
     });
 }
 /**
@@ -19062,7 +19066,6 @@ function run() {
                 settings.clientSecret) {
                 core.debug('ENTRAR ENTRA EN EL IF');
                 token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
-                //res.then(e => {token = e})
                 core.debug('AHORA VIENE EL TOKEN:' + token);
                 // res.then(e => core.debug('MY TIKTOK IS:' + e))
             }
