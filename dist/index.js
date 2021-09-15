@@ -19049,9 +19049,11 @@ function run() {
                 settings.privateKey !== '' &&
                 settings.clientId !== '' &&
                 settings.clientSecret !== '') {
+                core.debug("ENTRAR ENTRA EN EL IF");
                 token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
-                core.debug("TOKEN:" + token);
+                core.debug('TOKEN:' + token);
             }
+            token = yield getAppToken(settings.owner, settings.appId, settings.privateKey, settings.clientId, settings.clientSecret);
             if (token === '') {
                 throw new Error('Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.');
             }
