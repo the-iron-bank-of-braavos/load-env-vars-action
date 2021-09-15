@@ -19,18 +19,48 @@ __Description__: Load dotenv (.env) files from a remote repository and load it t
 
 
 ## Usage
+  
+Example with Token
+  
 ```yaml
 jobs:  
   test:
-    name: Load Variables Test
+    name: Load Variables Test with Token
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         id: action-env
         with:
+          repository: "${{ github.repository }}"
           token: "${{ secrets.GITHUB_TOKEN }}"
-          repository: "${{ github.repository }}"         
+      - name: "See exported values"
+        run: env        
+      - name: Test
+        run: |
+          echo ${{ env.VAR1 }}
+          echo ${{ env.VAR2 }}
+          echo ${{ steps.action-env.outputs.VAR1 }}
+          echo ${{ steps.action-env.outputs.VAR2 }}
+```
+
+Example with App Credentials  
+  
+```yaml
+jobs:
+  test-app:
+    name: Load Variables test with App Client Credentials
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        id: action-env-app
+        with:
+          repository: "${{ github.repository }}"
+          appId: ${{ secrets.APP_ID }}
+          privateKey: ${{ secrets.APP_RSA_PRIVATE_KEY }}
+          clientId: ${{ secrets.APP_CLIENT_ID }}
+          clientSecret: ${{ secrets.APP_CLIENT_SECRET }}
       - name: "See exported values"
         run: env        
       - name: Test
