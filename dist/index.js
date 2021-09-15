@@ -18837,6 +18837,7 @@ const { v4: uuidv4 } = __nccwpck_require__(5840);
 //const getAppToken = async (
 //  function funcTwo(activate) {
 //    return new Promise(function(resolve, reject) {
+// async function getAppToken(
 function getAppToken(organization, appId, privateKey, clientId, clientSecret) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
