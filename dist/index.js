@@ -18991,7 +18991,7 @@ function run() {
             // Load inputs
             const settings = inputs();
             core.debug(settings);
-            let token = settings.token;
+            let token = '';
             /*
             core.debug('DEBUG INPUTS:')
             core.debug('APP ID:' + settings.appId)
