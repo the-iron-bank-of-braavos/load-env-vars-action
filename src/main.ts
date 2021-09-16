@@ -99,7 +99,7 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
     ref: branch
   }
   core.info('Downloading zip archive')
-  core.debug(params)
+  // core.debug(params)
   const response = await downloadRepo(params)
   if (response.status !== 200) {
     throw new Error(
