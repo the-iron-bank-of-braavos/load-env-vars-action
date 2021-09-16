@@ -34,6 +34,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
@@ -43,10 +46,8 @@ const util_1 = __nccwpck_require__(1669);
 const io = __importStar(__nccwpck_require__(7436));
 const tc = __importStar(__nccwpck_require__(7784));
 const fs = __importStar(__nccwpck_require__(5747));
-// import path from 'path'
-// import dotenv from 'dotenv'
-const path = __nccwpck_require__(5622);
-const dotenv = __nccwpck_require__(2437);
+const path_1 = __importDefault(__nccwpck_require__(5622));
+const dotenv_1 = __importDefault(__nccwpck_require__(2437));
 const { v4: uuidv4 } = __nccwpck_require__(5840);
 const miCleanUp = core.getInput('cleanup') === 'true';
 /**
@@ -101,14 +102,14 @@ const buildEnvFilename = (root, directory, filename, profile = '') => {
             profiledFilename = `${namePart}-${profile}${extensionPart}`;
         }
     }
-    return path.join(root, directory, profiledFilename);
+    return path_1.default.join(root, directory, profiledFilename);
 };
 /**
  * Parse env file
  */
 const loadDotenvFile = filepath => {
     core.info(`Loading [${filepath}] file`);
-    return dotenv.parse(fs.readFileSync(filepath));
+    return dotenv_1.default.parse(fs.readFileSync(filepath));
 };
 /**
  * Fetches files from remote configserver
@@ -138,19 +139,19 @@ const cloneDotenvConfig = (owner, repo, branch, token, destination) => __awaiter
         throw new Error(`Enable to fetch repository. HTTP:[${response.status}], content:[${response.data}]`);
     }
     const downloadUuid = uuidv4();
-    const archiveFilepath = path.join(destination, `archive-${repo}-${downloadUuid}${archiveExt}`);
+    const archiveFilepath = path_1.default.join(destination, `archive-${repo}-${downloadUuid}${archiveExt}`);
     // core.info(`Writing archive file [${archiveFilepath}] to disk`)
-    const archiveData = Buffer.from(response.url);
+    const archiveData = Buffer.from(response.data, 'utf-8');
     yield fs.promises.writeFile(archiveFilepath, archiveData);
     // Extract archive
-    const repoPath = path.join(destination, `${repo}-${downloadUuid}`);
+    const repoPath = path_1.default.join(destination, `${repo}-${downloadUuid}`);
     core.info(`Extracting archive to [${repoPath}]`);
     yield extract(archiveFilepath, repoPath);
     // Cleanup archive
     yield io.rmRF(archiveFilepath);
     // Env content is in archives single folder
     const archiveContent = yield fs.promises.readdir(repoPath);
-    const dotenvConfigPath = path.resolve(path.join(repoPath, archiveContent[0]));
+    const dotenvConfigPath = path_1.default.resolve(path_1.default.join(repoPath, archiveContent[0]));
     core.info(`Configuration available at [${dotenvConfigPath}]`);
     return dotenvConfigPath;
 });
@@ -263,7 +264,7 @@ function run() {
             core.info(`Expected configuration filename: [${configurationFile}]`);
             // Load targeted configserver file content
             const envData = loadDotenvFile(configurationFile);
-            core.debug(envData);
+            core.debug(envData.tostring);
             // Publish file to GITHUB_ENV
             exportToGithubEnv(envData);
             core.info(`Configuration successfully loaded from configserver to GITHUB_ENV`);
