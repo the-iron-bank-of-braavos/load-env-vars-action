@@ -101,7 +101,7 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   core.info('Downloading zip archive')
   // core.debug(params)
   const response = await downloadRepo(params)
-  let status: number = response.status;
+  const status: number = response.status;
   if (status != 200) {
     throw new Error(
       `Enable to fetch repository. HTTP:[${response.status}], content:[${response.data}]`
@@ -114,7 +114,8 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
     `archive-${repo}-${downloadUuid}${archiveExt}`
   )
   core.info(`Writing archive file [${archiveFilepath}] to disk`)
-  const archiveData = Buffer.from(response.data)
+  const d: string = response.data;
+  const archiveData = Buffer.from(d)
   await fs.promises.writeFile(archiveFilepath, archiveData)
 
   // Extract archive
