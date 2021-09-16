@@ -197,7 +197,7 @@ async function run() {
     const settings = inputs()
     // core.debug(settings)
 
-    const token = settings.token
+    let token = settings.token
 
     /*
      * If App Credentials are configured,
