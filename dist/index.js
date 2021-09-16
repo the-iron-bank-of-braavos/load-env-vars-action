@@ -18825,6 +18825,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 
+// import * as github from '@actions/github'
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const createAppAuth = __nccwpck_require__(7541);
@@ -18961,7 +18962,7 @@ const inputs = () => {
         appId: core.getInput('appId', { required: false }),
         privateKey: core.getInput('privateKey', { required: false }),
         clientId: core.getInput('clientId', { required: false }),
-        clientSecret: core.getInput('clientSecret', { clientSecret: false }),
+        clientSecret: core.getInput('clientSecret', { required: false }),
         // This should be a token with access to your repository scoped in as a secret
         // token: ${{ secrets.GITHUB_TOKEN }}
         token: core.getInput('token', { required: false }),
