@@ -18824,7 +18824,6 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// Revisar function
 
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
@@ -18962,7 +18961,7 @@ const inputs = () => {
         appId: core.getInput('appId', { required: false }),
         privateKey: core.getInput('privateKey', { required: false }),
         clientId: core.getInput('clientId', { required: false }),
-        clientSecret: core.getInput('appId', { clientSecret: false }),
+        clientSecret: core.getInput('clientSecret', { clientSecret: false }),
         // This should be a token with access to your repository scoped in as a secret
         // token: ${{ secrets.GITHUB_TOKEN }}
         token: core.getInput('token', { required: false }),
@@ -18996,7 +18995,7 @@ function run() {
                 settings.privateKey &&
                 settings.clientId &&
                 settings.clientSecret) {
-                core.debug("---- ENTRA EN EL IF ---");
+                core.debug('---- ENTRA EN EL IF ---');
                 // Create octokit instance as app
                 const appOctokit = github.getOctokit({
                     authStrategy: createAppAuth,
