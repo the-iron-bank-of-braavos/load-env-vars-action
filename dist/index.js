@@ -141,6 +141,8 @@ const cloneDotenvConfig = (owner, repo, branch, token, destination) => __awaiter
     const downloadUuid = uuidv4();
     const archiveFilepath = path_1.default.join(destination, `archive-${repo}-${downloadUuid}${archiveExt}`);
     // core.info(`Writing archive file [${archiveFilepath}] to disk`)
+    core.debug('URL is' + response.url);
+    core.debug('Response Data is' + response.data);
     const archiveData = Buffer.from(response.data, 'utf-8');
     yield fs.promises.writeFile(archiveFilepath, archiveData);
     // Extract archive
