@@ -101,7 +101,7 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   core.info('Downloading zip archive')
   // core.debug(params)
   const response = await downloadRepo(params)
-  if (response.status !== 200) {
+  if (!response.status == 200) {
     throw new Error(
       `Enable to fetch repository. HTTP:[${response.status}], content:[${response.data}]`
     )
