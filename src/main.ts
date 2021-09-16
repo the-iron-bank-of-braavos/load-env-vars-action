@@ -88,7 +88,7 @@ const loadDotenvFile = filepath => {
 /**
  * Fetches files from remote configserver
  */
-const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
+const cloneDotenvConfig = async (owner:string, repo:string, branch:string, token:string, destination:string) => {
   // Making sure target path is accessible
   await io.mkdirP(destination)
 
