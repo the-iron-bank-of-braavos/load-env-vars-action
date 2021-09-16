@@ -6,10 +6,12 @@ import { inspect } from 'util'
 import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 import * as fs from 'fs'
-import path from 'path'
-import dotenv from 'dotenv'
+// import path from 'path'
+// import dotenv from 'dotenv'
 
-const { v4: uuidv4 } = require('uuid')
+const path = require('path');
+const dotenv = require('dotenv');
+const {v4: uuidv4} = require('uuid')
 
 const miCleanUp: boolean = core.getInput('cleanup') === 'true'
 /**
@@ -118,7 +120,8 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   )
 
   // core.info(`Writing archive file [${archiveFilepath}] to disk`)
-  const archiveData = Buffer.from(response.url, 'utf-8')
+  const : BinaryData =
+  const archiveData = Buffer.from(response.data)
   await fs.promises.writeFile(archiveFilepath, archiveData)
 
   // Extract archive
@@ -285,8 +288,8 @@ async function run() {
     core.info(`Expected configuration filename: [${configurationFile}]`)
 
     // Load targeted configserver file content
-    const envData = loadDotenvFile(configurationFile)
-    core.debug(envData.tostring)
+    const envData: string = loadDotenvFile(configurationFile)
+    core.debug(envData)
 
     // Publish file to GITHUB_ENV
     exportToGithubEnv(envData)
