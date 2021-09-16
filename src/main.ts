@@ -197,7 +197,7 @@ async function run() {
     const settings = inputs()
     core.debug(settings)
 
-    let token = settings.token
+    const token = settings.token
 
     if (
       settings.appId &&
