@@ -18991,18 +18991,12 @@ function run() {
             // Load inputs
             const settings = inputs();
             core.debug(settings);
-            let token = '';
-            /*
-            core.debug('DEBUG INPUTS:')
-            core.debug('APP ID:' + settings.appId)
-            core.debug('APP PRIVATE KEY:' + settings.privateKey)
-            core.debug('APP CLIENT ID:' + settings.clientId)
-            core.debug('APP CLIENT SECRET:' + settings.clientSecret)
-            */
+            const token = settings.token;
             if (settings.appId &&
                 settings.privateKey &&
                 settings.clientId &&
                 settings.clientSecret) {
+                core.debug("---- ENTRA EN EL IF ---");
                 // Create octokit instance as app
                 const appOctokit = github.getOctokit({
                     authStrategy: createAppAuth,
@@ -19030,31 +19024,39 @@ function run() {
                         ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.');
                 }
                 // Create app authentication
+                /*
                 const auth = createAppAuth({
-                    appId: settings.appId,
-                    privateKey: settings.privateKey,
-                    clientId: settings.clientId,
-                    clientSecret: settings.clientSecret
-                });
+                  appId: settings.appId,
+                  privateKey: settings.privateKey,
+                  clientId: settings.clientId,
+                  clientSecret: settings.clientSecret
+                })
+                */
                 // Authenticate as app installation and retrieve access token
-                const installationAuthentication = yield auth({
-                    type: 'installation',
-                    installationId: installationId
-                });
+                /*
+                const installationAuthentication = await auth({
+                  type: 'installation',
+                  installationId: installationId
+                })
+                */
                 // Set access token
                 // token = installationAuthentication.token
-                core.debug(installationAuthentication.token);
-                token = installationAuthentication.token;
                 // Throw error of invalid credentials if token is empty ( or not found ).
+                /*
                 if (token === '') {
-                    throw new Error('Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.');
+                  throw new Error(
+                    'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
+                  )
                 }
+              */
             }
-            // This sould be removed
-            // throw new Error('STOP!')
+            /*
             if (token === '') {
-                throw new Error('Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.');
+              throw new Error(
+                'Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.'
+              )
             }
+            */
             // Clone remote configserver
             const configDirectory = yield cloneDotenvConfig(settings.owner, settings.repo, settings.branch, token, settings.destination);
             // Define file to look for in configserver

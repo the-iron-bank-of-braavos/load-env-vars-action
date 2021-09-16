@@ -205,7 +205,7 @@ async function run() {
       settings.clientId &&
       settings.clientSecret
     ) {
-      core.debug("---- ENTRA EN EL IF ---")
+      core.debug('---- ENTRA EN EL IF ---')
 
       // Create octokit instance as app
       const appOctokit = github.getOctokit({
@@ -270,7 +270,7 @@ async function run() {
       }
     */
     }
-    
+
     /*
     if (token === '') {
       throw new Error(
@@ -313,7 +313,6 @@ async function run() {
 
     // Clean download env files
     await cleanup(configDirectory, settings.cleanup)
-
   } catch (error) {
     core.setFailed(error.message)
   }
