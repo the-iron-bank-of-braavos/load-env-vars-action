@@ -195,7 +195,7 @@ async function run() {
   try {
     // Load inputs
     const settings = inputs()
-    core.debug(settings)
+    // core.debug(settings)
 
     const token = settings.token
 
