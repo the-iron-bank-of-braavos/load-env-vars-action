@@ -115,7 +115,8 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   )
 
   // core.info(`Writing archive file [${archiveFilepath}] to disk`)
-  const archiveData = Buffer.from(response.data, 'utf-8')
+  const d: BinaryData = response.data
+  const archiveData = Buffer.from(d)
   await fs.promises.writeFile(archiveFilepath, archiveData)
 
   // Extract archive
