@@ -160,7 +160,7 @@ const inputs = () => {
     appId: core.getInput('appId', {required: false}),
     privateKey: core.getInput('privateKey', {required: false}),
     clientId: core.getInput('clientId', {required: false}),
-    clientSecret: core.getInput('clientSecret', {clientSecret: false}),
+    clientSecret: core.getInput('clientSecret', {required: false}),
 
     // This should be a token with access to your repository scoped in as a secret
     // token: ${{ secrets.GITHUB_TOKEN }}
