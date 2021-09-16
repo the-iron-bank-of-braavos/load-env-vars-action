@@ -199,16 +199,18 @@ async function run() {
 
     const token = settings.token
 
+    /*
+     * If App Credentials are configured,
+     * retrieve the installation access token
+     */
     if (
-      settings.appId &&
-      settings.privateKey &&
-      settings.clientId &&
-      settings.clientSecret
+      settings.appId !== '' &&
+      settings.privateKey !== '' &&
+      settings.clientId !== '' &&
+      settings.clientSecret !== ''
     ) {
-      core.debug('---- ENTRA EN EL IF ---')
-
       // Create octokit instance as app
-      const appOctokit = github.getOctokit({
+      const appOctokit = new Octokit({
         authStrategy: createAppAuth,
         auth: {
           appId: settings.appId,
@@ -222,7 +224,7 @@ async function run() {
 
       let installationId = Number(0)
 
-      // Find app installationId by owner
+      // Find app installationId by organization
       for (let i = 0; i < data.length; i++) {
         core.debug(`Installation: ${inspect(data[i])}`)
         if (data[i]?.account?.login === settings.owner) {
@@ -241,43 +243,22 @@ async function run() {
       }
 
       // Create app authentication
-      /*
       const auth = createAppAuth({
         appId: settings.appId,
         privateKey: settings.privateKey,
         clientId: settings.clientId,
         clientSecret: settings.clientSecret
       })
-      */
 
       // Authenticate as app installation and retrieve access token
-      /*
       const installationAuthentication = await auth({
         type: 'installation',
         installationId: installationId
       })
-      */
 
       // Set access token
-      // token = installationAuthentication.token
-
-      // Throw error of invalid credentials if token is empty ( or not found ).
-      /*
-      if (token === '') {
-        throw new Error(
-          'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
-        )
-      }
-    */
+      token = installationAuthentication.token
     }
-
-    /*
-    if (token === '') {
-      throw new Error(
-        'Authorization required!. You must provide a Personal Access Token or an Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation.'
-      )
-    }
-    */
 
     // Clone remote configserver
     const configDirectory = await cloneDotenvConfig(
