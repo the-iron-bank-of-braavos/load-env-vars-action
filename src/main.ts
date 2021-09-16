@@ -1,14 +1,23 @@
-import {inspect} from 'util'
+import * as core from '@actions/core'
 import * as github from '@actions/github'
+import {Octokit} from '@octokit/rest'
+import {createAppAuth} from '@octokit/auth-app'
+import {inspect} from 'util'
 
-const core = require('@actions/core')
+import {io} from '@actions/io'
+import {tc} from '@actions/tool-cache'
+import {fs} from '@actions/fs'
+import {path} from 'path'
+import {dotenv} from 'dotenv'
+
+//const core = require('@actions/core')
 //const github = require('@actions/github')
-const createAppAuth = require('@octokit/auth-app')
-const io = require('@actions/io')
-const tc = require('@actions/tool-cache')
-const fs = require('fs')
-const path = require('path')
-const dotenv = require('dotenv')
+//const createAppAuth = require('@octokit/auth-app')
+//const io = require('@actions/io')
+//const tc = require('@actions/tool-cache')
+//const fs = require('fs')
+//const path = require('path')
+//const dotenv = require('dotenv')
 const {v4: uuidv4} = require('uuid')
 
 /**
