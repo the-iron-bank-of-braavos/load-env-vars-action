@@ -6,7 +6,7 @@ import {inspect} from 'util'
 
 import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
-import * as fs from '@actions/fs'
+import * as fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
 
