@@ -4,9 +4,9 @@ import {Octokit} from '@octokit/rest'
 import {createAppAuth} from '@octokit/auth-app'
 import {inspect} from 'util'
 
-import io from '@actions/io'
-import tc from '@actions/tool-cache'
-import fs from '@actions/fs'
+import * as io from '@actions/io'
+import * as tc from '@actions/tool-cache'
+import * as fs from '@actions/fs'
 import path from 'path'
 import dotenv from 'dotenv'
 
