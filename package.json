@@ -6,7 +6,7 @@
   "main": "src/main.ts",
   "scripts": {
     "build": "tsc --target ES6",
-    "dist": "ncc build lib/main.js --license licenses.txt",
+    "dist": "ncc build",
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
