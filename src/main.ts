@@ -1,16 +1,17 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {Octokit} from '@octokit/rest'
-import {createAppAuth} from '@octokit/auth-app'
-import {inspect} from 'util'
+import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
+import { createAppAuth } from '@octokit/auth-app'
+import { inspect } from 'util'
 import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 import * as fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
 
-const {v4: uuidv4} = require('uuid')
+const { v4: uuidv4 } = require('uuid')
 
+const miCleanUp: boolean = core.getInput('cleanup') === 'true'
 /**
  * Sets env variable for the job
  */
@@ -87,9 +88,11 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   const octokit = github.getOctokit(token)
   // Detect platform
   const onWindows = process.platform === 'win32'
+
   const downloadRepo = onWindows
     ? octokit.rest.repos.downloadZipballArchive
-    : octokit.rest.repos.downloadTarballArchive
+    : octokit.rest.repos.downloadTarballArchive;
+
   const archiveExt = onWindows ? '.zip' : '.tar.gz'
   const extract = onWindows ? tc.extractZip : tc.extractTar
 
@@ -115,8 +118,7 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   )
 
   // core.info(`Writing archive file [${archiveFilepath}] to disk`)
-  const d: BinaryData = response.data
-  const archiveData = Buffer.from(d)
+  const archiveData = Buffer.from(response.url, 'utf-8')
   await fs.promises.writeFile(archiveFilepath, archiveData)
 
   // Extract archive
@@ -157,17 +159,17 @@ const cleanup = async (configDirectory, cleanup = true) => {
 const inputs = () => {
   return {
     // The repository to fetch (<owner>/<repo>)
-    repository: core.getInput('repository', {required: true}),
-    owner: core.getInput('repository', {required: true}).split('/')[0],
-    repo: core.getInput('repository', {required: true}).split('/')[1],
-    appId: core.getInput('appId', {required: false}),
-    privateKey: core.getInput('privateKey', {required: false}),
-    clientId: core.getInput('clientId', {required: false}),
-    clientSecret: core.getInput('clientSecret', {required: false}),
+    repository: core.getInput('repository', { required: true }),
+    owner: core.getInput('repository', { required: true }).split('/')[0],
+    repo: core.getInput('repository', { required: true }).split('/')[1],
+    appId: core.getInput('appId', { required: false }),
+    privateKey: core.getInput('privateKey', { required: false }),
+    clientId: core.getInput('clientId', { required: false }),
+    clientSecret: core.getInput('clientSecret', { required: false }),
 
     // This should be a token with access to your repository scoped in as a secret
     // token: ${{ secrets.GITHUB_TOKEN }}
-    token: core.getInput('token', {required: false}),
+    token: core.getInput('token', { required: false }),
 
     // The remote branch to checkout (default: main)
     branch: core.getInput('branch') || 'main',
@@ -188,7 +190,8 @@ const inputs = () => {
     profile: core.getInput('profile') || '',
 
     // If false, won't delete configuration files downloaded after loading to GITHUB_ENV
-    cleanup: core.getInput('cleanup') || true
+    //cleanup: core.getInput('cleanup') || true
+  
   }
 }
 
@@ -213,7 +216,7 @@ async function run() {
       settings.clientSecret !== ''
     ) {
       // Create octokit instance as app
-      const appOctokit = new github.getOctokit({
+      const appOctokit = new Octokit({
         authStrategy: createAppAuth,
         auth: {
           appId: settings.appId,
@@ -240,8 +243,8 @@ async function run() {
       if (installationId === 0) {
         throw new Error(
           'The ' +
-            settings.owner +
-            ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.'
+          settings.owner +
+          ' organization has no privileges to access this app. Please, check your credentials and the organization permissions.'
         )
       }
 
@@ -283,7 +286,7 @@ async function run() {
 
     // Load targeted configserver file content
     const envData = loadDotenvFile(configurationFile)
-    core.debug(envData)
+    core.debug(envData.tostring)
 
     // Publish file to GITHUB_ENV
     exportToGithubEnv(envData)
@@ -296,7 +299,8 @@ async function run() {
     core.info(`Configuration successfully loaded from configserver to output`)
 
     // Clean download env files
-    await cleanup(configDirectory, settings.cleanup)
+
+    await cleanup(configDirectory, miCleanUp)
   } catch (error) {
     core.setFailed(error.message)
   }
