@@ -197,7 +197,7 @@ async function run() {
     const settings = inputs()
     core.debug(settings)
 
-    let token = ''
+    let token = settings.token
 
     if (
       settings.appId &&
@@ -268,9 +268,9 @@ async function run() {
           'Invalid credentials! You must provide a valid personal access token or valid Application Credentials. Application Credentials requires appId, privateKey, clientId, clientSecret, and installation. Please, review your defined credentials.'
         )
       }
-    }
     */
-
+    }
+    
     /*
     if (token === '') {
       throw new Error(
@@ -313,6 +313,7 @@ async function run() {
 
     // Clean download env files
     await cleanup(configDirectory, settings.cleanup)
+
   } catch (error) {
     core.setFailed(error.message)
   }
