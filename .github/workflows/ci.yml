@@ -23,11 +23,11 @@ jobs:
           node-version: 12.x
       - run: npm install
       - run: npm ci
-      - run: npm run build
-      - run: npm run format
-      - run: npm run format-check
-      - run: npm run lint
-      - run: npm run test
+      #- run: npm run build
+      #- run: npm run format
+      #- run: npm run format-check
+      #- run: npm run lint
+      #- run: npm run test
       - name: "Commit and push changes"
         run: |
           git config user.name github-actions
@@ -36,7 +36,7 @@ jobs:
           (git commit -m "Build index.js") || true
           (git push) || true
           
-  test:
+  .test:
     name: Test Personal Access Token
     runs-on: ubuntu-latest
     needs: build
@@ -56,7 +56,7 @@ jobs:
           echo ${{ steps.action-env.outputs.DEMO }}
           echo ${{ steps.action-env.outputs.VERSION }}
 
-  test-app:
+  .test-app:
     name: Test App Client Credentials
     runs-on: ubuntu-latest
     needs: build
