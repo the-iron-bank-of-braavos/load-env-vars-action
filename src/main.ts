@@ -1,17 +1,15 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
+import { Octokit } from '@octokit/rest'
 import { createAppAuth } from '@octokit/auth-app'
 import { inspect } from 'util'
 import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 import * as fs from 'fs'
-// import path from 'path'
-// import dotenv from 'dotenv'
+import path from 'path'
+import dotenv from 'dotenv'
 
-const path = require('path');
-const dotenv = require('dotenv');
-const {v4: uuidv4} = require('uuid')
+const { v4: uuidv4 } = require('uuid')
 
 const miCleanUp: boolean = core.getInput('cleanup') === 'true'
 /**
@@ -105,7 +103,7 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   }
   core.info('Downloading zip archive')
   // core.debug(params)
-  const response = await downloadRepo(params)
+  const response: any = await downloadRepo(params)
   const status: number = response.status;
   if (status != 200) {
     throw new Error(
@@ -120,8 +118,7 @@ const cloneDotenvConfig = async (owner, repo, branch, token, destination) => {
   )
 
   // core.info(`Writing archive file [${archiveFilepath}] to disk`)
-  
-  const archiveData = Buffer.from(response.url)
+  const archiveData = Buffer.from(response.data, 'utf-8')
   await fs.promises.writeFile(archiveFilepath, archiveData)
 
   // Extract archive
@@ -288,8 +285,8 @@ async function run() {
     core.info(`Expected configuration filename: [${configurationFile}]`)
 
     // Load targeted configserver file content
-    const envData: string = loadDotenvFile(configurationFile)
-    core.debug(envData)
+    const envData = loadDotenvFile(configurationFile)
+    core.debug(envData.tostring)
 
     // Publish file to GITHUB_ENV
     exportToGithubEnv(envData)
